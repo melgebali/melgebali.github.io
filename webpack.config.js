@@ -1,33 +1,39 @@
-var path = require("path");
+var path = require('path')
 
-const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 var webpackConfig = {
   mode: 'production',
   entry: {
-    bargauge: "./chart.js",
-  },
-  devServer: {
-    contentBase: './dist',
+    chart: "./hello_world_react.js"
   },
   output: {
     filename: "[name].js",
-    path: __dirname,
+    path: path.join(__dirname, "dist"),
     library: "[name]",
     libraryTarget: "umd"
   },
   resolve: {
-    extensions: [".js"],
-    modules: [path.join(__dirname, "../src"), "node_modules"]
+    extensions: [".ts", ".js"]
   },
-  plugins: [new UglifyJSPlugin()],
+  plugins: [
+    new UglifyJSPlugin()
+  ],
   module: {
     rules: [
-      { test: /\.(js|jsx)$/, use: "babel-loader"},
+      { test: /\.js$/, loader: "babel-loader" },
+      { test: /\.ts$/, loader: "ts-loader" },
       { test: /\.css$/, loader: [ 'to-string-loader', 'css-loader' ] }
     ]
   },
-  stats: {}
-};
+  stats: {
+    warningsFilter: /export.*liquidfillgauge.*was not found/
+  },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+  }
+}
 
-module.exports = webpackConfig;
+module.exports = webpackConfig
