@@ -5,7 +5,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var webpackConfig = {
   mode: 'production',
   entry: {
-    chart: "./tamer.js"
+    chart: "./hello_world_react.js"
   },
   output: {
     filename: "[name].js",
